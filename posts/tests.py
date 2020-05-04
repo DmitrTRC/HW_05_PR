@@ -5,6 +5,7 @@ from posts.models import Post, Group
 from django.urls import reverse, reverse_lazy
 from django.core.cache import cache
 import time
+from posts.forms import CommentForm
 
 User = get_user_model()
 
@@ -274,26 +275,23 @@ class PostEditTest(TestCase):
 
         #  Test post is created
 
-        url = reverse_lazy('add_comment', kwargs={
+        url = reverse_lazy('post', kwargs={
             'username': self.staff_user.username,
             'post_id': post.id,
         })
         print(url)
         self.client.force_login(self.non_author_user)
-
-        item = {
-            'text': comment_msg,
-        }
-        self.client.post(url, kwargs={
-            'item': item
-        })
-
+        code = self.client.post(url, kwargs={
+            'form.text': tst_msg,
+        }).status_code
+        response = self.client.get(url)
+        self.assertContains(response, tst_msg)
         self.client.logout()
 
-        self.client.force_login(self.staff_user)
+        # Now try Anonymous
 
-        url = reverse_lazy('profile', kwargs={
-            'username': self.staff_user.username,
-        })
-        response = self.client.get(url,)
-        self.assertContains(response, comment_msg)
+        code = self.client.post(url, kwargs={
+            'form.text': comment_msg,
+        }).status_code
+        response = self.client.get(url)
+        self.assertNotContains(response, comment_msg)

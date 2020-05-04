@@ -52,7 +52,6 @@ def profile(request, username):
     return render(request, 'profile.html', post_request.get_user_info(request, username))
 
 
-@login_required
 def post_view(request, username, post_id):
     user = get_object_or_404(User, username__exact=username)
     post = get_object_or_404(Post, pk=post_id)
