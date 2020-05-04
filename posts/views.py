@@ -21,14 +21,14 @@ def group_posts(request, slug):
 
 @login_required
 def new_post(request):
+    form = PostForm(request.POST or None, files=request.FILES or None)
     if request.method == 'POST':
-        form = PostForm(request.POST, files=request.FILES)
         if form.is_valid():
             Post.objects.create(
                 author=request.user, group=form.cleaned_data['group'],
                 text=form.cleaned_data['text'], image=form.cleaned_data['image'])
             return redirect('index')
-    form = PostForm()
+
     return render(request, 'post_new.html', {'form': form})
 
 
