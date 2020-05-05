@@ -24,9 +24,13 @@ def new_post(request):
     form = PostForm(request.POST or None, files=request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
-            Post.objects.create(
-                author=request.user, group=form.cleaned_data['group'],
-                text=form.cleaned_data['text'], image=form.cleaned_data['image'])
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+
+            # Post.objects.create(
+            #     author=request.user, group=form.cleaned_data['group'],
+            #     text=form.cleaned_data['text'], image=form.cleaned_data['image'])
             return redirect('index')
 
     return render(request, 'post_new.html', {'form': form})
