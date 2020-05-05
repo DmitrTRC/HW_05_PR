@@ -8,7 +8,9 @@
         <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
         {% else %}
         <a class="p-2 text-dark" href="{% url 'login' %}">Войти</a> |
-        <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a>
+        <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a> |
         {% endif %}
+        <a class="p-2 text-primary" href="{% url 'about-author' %}">Об авторе</a>
+        <a class="p-2 text-success" href="{% url 'terms' %}">Technology</a>
     </nav>
 </nav>

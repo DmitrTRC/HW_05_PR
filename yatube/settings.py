@@ -27,12 +27,16 @@ DEBUG = True
 #DEBUG = False
 
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "[::1]",
-    "testserver",
+    # "localhost",
+    # "127.0.0.1",
+    # "[::1]",
+    # "testserver",
+    '*' # Temporrary
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,12 +53,14 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
     'sorl.thumbnail',
+    'debug_toolbar',
 
 ]
 
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

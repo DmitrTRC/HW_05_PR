@@ -19,16 +19,23 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('about-author/', views.flatpage, {'url': '/about-author/'}, name='about-author'),
+    path('about-author/', views.flatpage,
+         {'url': '/about-author/'}, name='about-author'),
     path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
     path('about-spec/', views.flatpage, {'url': '/about-spec/'}, name='terms'),
-    path('contacts/', views.flatpage, {'url': '/contacts/'}, name='pure_about'),
+    path('contacts/', views.flatpage,
+         {'url': '/contacts/'}, name='pure_about'),
     path("", include("posts.urls")),
 
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    import debug_toolbar
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)
+
 # urlpatterns += [
 #     # On Django 2+:
 #     path("demo/", Schema.as_view()),

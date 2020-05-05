@@ -47,6 +47,9 @@ class Comment(models.Model):
     created = models.DateTimeField(
         'date published', auto_now_add=True, db_index=True)
 
+    class Meta:
+        ordering = ('-created',)
+
     def __str__(self):
         return 'Comment {} by {}'.format(self.text, self.author.get_full_name())
 
