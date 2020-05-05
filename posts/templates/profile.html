@@ -3,7 +3,7 @@
 {% block content %}
 
 <li class="list-group-item">
-    {% if following %}
+    {% if user.tracking.count %}
     <a class="btn btn-lg btn-light"
             href="{% url 'profile_unfollow' profile.username %}" role="button">
             Отписаться

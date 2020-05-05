@@ -49,6 +49,8 @@ def get_user_info(request, username):
     page_number = request.GET.get('page')
     # получить записи с нужным смещением
     page = paginator.get_page(page_number)
+    print('Tracking : ', user.tracking.count())
+    print('Followers :', user.followers.count())
     return {'profile': user, 'paginator': paginator, 'page': page}
 
 
