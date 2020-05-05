@@ -28,9 +28,6 @@ def new_post(request):
             new_post.author = request.user
             new_post.save()
 
-            # Post.objects.create(
-            #     author=request.user, group=form.cleaned_data['group'],
-            #     text=form.cleaned_data['text'], image=form.cleaned_data['image'])
             return redirect('index')
 
     return render(request, 'post_new.html', {'form': form})
@@ -41,7 +38,7 @@ def new_post(request):
 def add_comment(request, username, post_id):
     post = get_object_or_404(Post, pk=post_id)
     author = request.user
-    comments = post.comment_set.all()
+    comments = post.comments.all()
     new_comment = None
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
@@ -59,7 +56,7 @@ def profile(request, username):
 def post_view(request, username, post_id):
     user = get_object_or_404(User, username__exact=username)
     post = get_object_or_404(Post, pk=post_id)
-    comments = post.comment_set.all()
+    comments = post.comments.all()
     comment_form = CommentForm()
     context = {
         'form': comment_form,
