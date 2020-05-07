@@ -102,8 +102,8 @@ def server_error(request):
 
 @login_required
 def follow_index(request):
-    follow = request.user.tracking.all()
-    post_list = Post.objects.filter(author__in=follow).order_by('-pub_date')
+    post_list = Post.objects.filter(
+        author__in=request.user.tracking.all()).order_by('-pub_date')
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
